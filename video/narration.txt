@@ -1,0 +1,13 @@
+ClaimCheck verifies study notes against their source. Paste a passage and your bullets. No network, no model, no keys.
+
+Each bullet splits into atoms: figures, years, names, causal verbs. Seven atoms here, five on a passage span. The headline is rule coverage, not truth.
+
+One figure drifted: twelve gates in the notes, nine in the passage. The table prints the exact span and a one line fix, and the moved date is contradicted too.
+
+The heat sample catches a subtler error. The draft says tree cover causes cooler summers, but the passage only reports association.
+
+The trial notes say the treatment shortens recovery; the passage hedges that it may. A spelled out number is unverifiable, not guessed.
+
+Open the second reader and paste a revision: three verdicts flip, one support lost and two gained.
+
+ClaimCheck stays narrow: rules not semantics, the passage as the only source, and silence never treated as disproof.

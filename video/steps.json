@@ -1,0 +1,141 @@
+[
+  {
+    "do": "at",
+    "s": 0.3
+  },
+  {
+    "do": "move",
+    "selector": "#score-value",
+    "ms": 700
+  },
+  {
+    "do": "at",
+    "s": 10.31
+  },
+  {
+    "do": "move",
+    "selector": "#atom-count",
+    "ms": 700
+  },
+  {
+    "do": "at",
+    "s": 15.25
+  },
+  {
+    "do": "scrollTo",
+    "selector": "#atom-body tr:nth-child(3)",
+    "offset": 300,
+    "ms": 1400
+  },
+  {
+    "do": "at",
+    "s": 21.94
+  },
+  {
+    "do": "scrollTo",
+    "selector": "#atom-body tr:nth-child(4)",
+    "offset": 300,
+    "ms": 1300
+  },
+  {
+    "do": "move",
+    "selector": "#atom-body tr:nth-child(4) .rule-id",
+    "ms": 900
+  },
+  {
+    "do": "at",
+    "s": 33.79
+  },
+  {
+    "do": "click",
+    "selector": ".sample[data-sample=\"heat\"]"
+  },
+  {
+    "do": "wait",
+    "ms": 600
+  },
+  {
+    "do": "move",
+    "selector": "#atom-body tr:nth-child(1) .verdict",
+    "ms": 800
+  },
+  {
+    "do": "at",
+    "s": 44.04
+  },
+  {
+    "do": "click",
+    "selector": ".sample[data-sample=\"hollis\"]"
+  },
+  {
+    "do": "wait",
+    "ms": 600
+  },
+  {
+    "do": "move",
+    "selector": "#atom-body tr:nth-child(1) .verdict",
+    "ms": 800
+  },
+  {
+    "do": "at",
+    "s": 54.53
+  },
+  {
+    "do": "click",
+    "selector": ".sample[data-sample=\"dam\"]",
+    "ms": 350
+  },
+  {
+    "do": "click",
+    "selector": ".tab[data-tab=\"reader\"]",
+    "ms": 350
+  },
+  {
+    "do": "wait",
+    "ms": 250
+  },
+  {
+    "do": "select",
+    "selector": "#revision",
+    "value": "The Meridian Dam was completed in 1962.\nThe reservoir supplies water to 1.4 million residents.\nThe spillway was widened to 9 gates in 1998.\nCost overruns reached $18 million by 1964."
+  },
+  {
+    "do": "click",
+    "selector": "#compare",
+    "ms": 350
+  },
+  {
+    "do": "wait",
+    "ms": 300
+  },
+  {
+    "do": "move",
+    "selector": ".diff-row.changed",
+    "ms": 800
+  },
+  {
+    "do": "at",
+    "s": 62.08
+  },
+  {
+    "do": "click",
+    "selector": ".tab[data-tab=\"rules\"]"
+  },
+  {
+    "do": "wait",
+    "ms": 500
+  },
+  {
+    "do": "move",
+    "selector": ".limits h2",
+    "ms": 800
+  },
+  {
+    "do": "at",
+    "s": 71.0
+  },
+  {
+    "do": "wait",
+    "ms": 700
+  }
+]

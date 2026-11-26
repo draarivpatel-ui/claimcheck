@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ClaimCheck — offline claim verifier for study notes</title>
+  <meta name="description" content="Paste a passage and a list of claims. ClaimCheck splits every claim into numbers, dates, names and causal assertions, then marks each atom SUPPORTED, UNSUPPORTED or UNVERIFIABLE-IN-TEXT with the exact span and the rule that fired. Offline, deterministic, zero dependencies.">
+  <meta name="color-scheme" content="dark">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230b1017'/%3E%3Cpath d='M8 17l5 5 11-12' fill='none' stroke='%235eead4' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="26" height="26"><rect width="32" height="32" rx="8" fill="#0e1721"/><path d="M8 17l5 5 11-12" fill="none" stroke="#5eead4" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+      <div class="brand-text">
+        <h1>ClaimCheck</h1>
+        <p>Rule-based claim verifier for notes and drafts</p>
+      </div>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Views">
+      <button class="tab is-active" data-tab="verify" role="tab" aria-selected="true" id="tab-verify">Verify</button>
+      <button class="tab" data-tab="reader" role="tab" aria-selected="false" id="tab-reader">Second reader</button>
+      <button class="tab" data-tab="rules" role="tab" aria-selected="false" id="tab-rules">Rulebook</button>
+    </nav>
+    <div class="badges" aria-label="Properties">
+      <span class="badge">offline</span>
+      <span class="badge">zero deps</span>
+      <span class="badge warn">rules ≠ truth</span>
+    </div>
+  </header>
+
+  <main class="shell">
+    <!-- ------------------------------------------------------------ VERIFY -->
+    <section id="view-verify" class="view" role="tabpanel" aria-labelledby="tab-verify">
+      <div class="grid">
+        <aside class="panel inputs">
+          <div class="panel-head">
+            <h2>Input</h2>
+            <div class="samples" id="samples"></div>
+          </div>
+          <label class="field">
+            <span class="field-label">Passage <em>the text being checked against</em></span>
+            <textarea id="passage" spellcheck="false" aria-label="Passage"></textarea>
+          </label>
+          <label class="field">
+            <span class="field-label">Claims <em>one per line</em></span>
+            <textarea id="claims" spellcheck="false" aria-label="Claims"></textarea>
+          </label>
+          <div class="actions">
+            <button id="analyze" class="btn primary">Check claims <kbd>⌘↵</kbd></button>
+            <button id="clear" class="btn ghost">Clear</button>
+          </div>
+          <p class="micro">Everything runs in this tab: no network calls, no model, no keys.</p>
+        </aside>
+
+        <section class="results" aria-live="polite">
+          <div class="panel scorepanel">
+            <div class="score-top">
+              <div class="score-big">
+                <span id="score-value">–</span><span class="score-pct" id="score-pct">%</span>
+              </div>
+              <div class="score-meta">
+                <span class="score-label">rule-coverage score</span>
+                <span class="score-frac" id="score-frac">No claims checked yet</span>
+                <div class="bar"><div class="bar-fill" id="score-bar"></div></div>
+              </div>
+              <div class="counts" id="counts"></div>
+            </div>
+            <p class="score-note" id="score-note">Percent of atoms that matched a passage span. This is rule coverage, not truth: ClaimCheck never checks the passage against the world.</p>
+          </div>
+
+          <div class="panel evidence">
+            <div class="panel-head">
+              <h2>Passage evidence</h2>
+              <span class="micro" id="mark-key">green supported · red contradicted · amber unverifiable</span>
+            </div>
+            <div id="passage-view" class="passage-view"></div>
+          </div>
+
+          <div class="panel tablepanel">
+            <div class="panel-head">
+              <h2>Atoms</h2>
+              <span class="micro" id="atom-count">0 atoms</span>
+            </div>
+            <div class="table-wrap">
+              <table id="atom-table">
+                <thead>
+                  <tr>
+                    <th class="c-atom">Atom</th>
+                    <th class="c-type">Type</th>
+                    <th class="c-verdict">Verdict</th>
+                    <th class="c-rule">Rule fired</th>
+                    <th class="c-quote">Passage quote &amp; span</th>
+                    <th class="c-fix">One-line fix</th>
+                  </tr>
+                </thead>
+                <tbody id="atom-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------- SECOND READER -->
+    <section id="view-reader" class="view" role="tabpanel" aria-labelledby="tab-reader" hidden>
+      <div class="grid">
+        <aside class="panel inputs">
+          <div class="panel-head"><h2>Revision</h2></div>
+          <p class="micro reader-intro">Paste the revised claims. The passage stays the same, so every verdict change is attributable to the wording you changed.</p>
+          <label class="field">
+            <span class="field-label">Revised claims <em>one per line</em></span>
+            <textarea id="revision" spellcheck="false" aria-label="Revised claims"></textarea>
+          </label>
+          <div class="actions">
+            <button id="compare" class="btn primary">Compare revisions</button>
+            <button id="restore-revision" class="btn ghost">Reset to current</button>
+          </div>
+          <p class="micro">Atoms pair by bullet position, type, and order within the bullet. Reordering whole bullets reads as a changed claim; that limit is real.</p>
+        </aside>
+        <section class="results" aria-live="polite">
+          <div class="panel diff-summary" id="diff-summary">
+            <p class="micro">Run a comparison to see verdict changes against the analysis in the Verify tab.</p>
+          </div>
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Verdict changes</h2>
+              <span class="micro" id="diff-count"></span>
+            </div>
+            <div id="diff-rows" class="diff-rows"></div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ----------------------------------------------------------- RULEBOOK -->
+    <section id="view-rules" class="view" role="tabpanel" aria-labelledby="tab-rules" hidden>
+      <div class="rules-grid">
+        <article class="panel">
+          <div class="panel-head"><h2>Every rule that can fire</h2><span class="micro">17 rules · 4 families</span></div>
+          <div class="table-wrap">
+            <table id="rule-table">
+              <thead>
+                <tr><th>Rule</th><th>Family</th><th>Verdict</th><th>Fires when</th></tr>
+              </thead>
+              <tbody id="rule-body"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="panel limits">
+          <h2>Honest limits</h2>
+          <ul>
+            <li><strong>Rules, not semantics.</strong> ClaimCheck matches words, figures and cue phrases. A paraphrase that shares no vocabulary reads as UNVERIFIABLE-IN-TEXT.</li>
+            <li><strong>No fact-checking against the world.</strong> The passage is treated as the only source. A confidently wrong passage produces confidently SUPPORTED atoms.</li>
+            <li><strong>The score is coverage, not truth.</strong> It is the share of atoms the rules could place against a span. It is not a probability that a claim is correct.</li>
+            <li><strong>Silence is not disproof.</strong> A name or year missing from the passage is UNVERIFIABLE-IN-TEXT, never UNSUPPORTED.</li>
+            <li><strong>Atomization is shallow.</strong> Numbers, 4-digit years, capitalized name runs, and a fixed cue list. Pronouns, implicit entities and rewritten units are missed.</li>
+            <li><strong>Hedges are sentence-level.</strong> One "may" anywhere in the matched sentence weakens a causal atom for the whole sentence.</li>
+          </ul>
+          <h2 class="mt">How a verdict is chosen</h2>
+          <p class="micro">Each atom asks one question: can it be placed against a span in the passage, and does that span agree? No span → UNVERIFIABLE-IN-TEXT. Span disagrees → UNSUPPORTED. Span agrees → SUPPORTED.</p>
+          <h2 class="mt">AI disclosure</h2>
+          <p class="micro">The software, tests, sample passages, narration and video were produced with AI assistance (Claude Code) and reviewed by the entrant. The app itself uses no AI model at runtime: every verdict comes from the deterministic rules in <code>src/rules.js</code>.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>ClaimCheck · MIT · offline · deterministic</span>
+    <span class="dot">·</span>
+    <span>Synthetic samples only; no real studies, dams or trials.</span>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

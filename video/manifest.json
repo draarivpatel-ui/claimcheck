@@ -1,0 +1,140 @@
+{
+ "sr": 24000,
+ "total": 71.24,
+ "lead": 0.6,
+ "gap_sent": 0.3,
+ "gap_para": 0.75,
+ "tail": 1.0,
+ "seed": 1,
+ "overall_rms": 0.09821583330631256,
+ "overall_peak": 0.9399999976158142,
+ "words": 152,
+ "sentences": [
+  {
+   "para": 0,
+   "sent": 0,
+   "text": "ClaimCheck verifies study notes against their source.",
+   "dur": 3.88,
+   "words": 7,
+   "rms": 0.10708973835693636,
+   "start": 0.6
+  },
+  {
+   "para": 0,
+   "sent": 1,
+   "text": "Paste a passage and your bullets.",
+   "dur": 2.32,
+   "words": 6,
+   "rms": 0.09662403125462427,
+   "start": 4.78
+  },
+  {
+   "para": 0,
+   "sent": 2,
+   "text": "No network, no model, no keys.",
+   "dur": 2.16,
+   "words": 6,
+   "rms": 0.11565988488761568,
+   "start": 7.4
+  },
+  {
+   "para": 1,
+   "sent": 0,
+   "text": "Each bullet splits into atoms: figures, years, names, causal verbs.",
+   "dur": 4.64,
+   "words": 10,
+   "rms": 0.11658763140439987,
+   "start": 10.31
+  },
+  {
+   "para": 1,
+   "sent": 1,
+   "text": "Seven atoms here, five on a passage span.",
+   "dur": 2.8,
+   "words": 8,
+   "rms": 0.10761496424674988,
+   "start": 15.25
+  },
+  {
+   "para": 1,
+   "sent": 2,
+   "text": "The headline is rule coverage, not truth.",
+   "dur": 2.84,
+   "words": 7,
+   "rms": 0.11072203071392998,
+   "start": 18.35
+  },
+  {
+   "para": 2,
+   "sent": 0,
+   "text": "One figure drifted: twelve gates in the notes, nine in the passage.",
+   "dur": 4.6,
+   "words": 12,
+   "rms": 0.11680119762728414,
+   "start": 21.94
+  },
+  {
+   "para": 2,
+   "sent": 1,
+   "text": "The table prints the exact span and a one line fix, and the moved date is contradicted too.",
+   "dur": 6.2,
+   "words": 18,
+   "rms": 0.11389859020709991,
+   "start": 26.84
+  },
+  {
+   "para": 3,
+   "sent": 0,
+   "text": "The heat sample catches a subtler error.",
+   "dur": 2.8,
+   "words": 7,
+   "rms": 0.10339238376618144,
+   "start": 33.79
+  },
+  {
+   "para": 3,
+   "sent": 1,
+   "text": "The draft says tree cover causes cooler summers, but the passage only reports association.",
+   "dur": 6.4,
+   "words": 14,
+   "rms": 0.1148667186498642,
+   "start": 36.89
+  },
+  {
+   "para": 4,
+   "sent": 0,
+   "text": "The trial notes say the treatment shortens recovery; the passage hedges that it may.",
+   "dur": 5.92,
+   "words": 14,
+   "rms": 0.10657105088536994,
+   "start": 44.04
+  },
+  {
+   "para": 4,
+   "sent": 1,
+   "text": "A spelled out number is unverifiable, not guessed.",
+   "dur": 3.52,
+   "words": 8,
+   "rms": 0.12531377375125885,
+   "start": 50.26
+  },
+  {
+   "para": 5,
+   "sent": 0,
+   "text": "Open the second reader and paste a revision: three verdicts flip, one support lost and two gained.",
+   "dur": 6.8,
+   "words": 17,
+   "rms": 0.10947538167238235,
+   "start": 54.53
+  },
+  {
+   "para": 6,
+   "sent": 0,
+   "text": "ClaimCheck stays narrow: rules not semantics, the passage as the only source, and silence never treated as disproof.",
+   "dur": 8.16,
+   "words": 18,
+   "rms": 0.10548486714933333,
+   "start": 62.08
+  }
+ ]
+}
